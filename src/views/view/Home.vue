@@ -136,7 +136,7 @@ export default {
   display: block;
   margin-bottom: 10px;
   text-decoration: none;
-  color: rgb(199, 171, 58);
+  color:rgb(200, 160, 90);
   margin-right: 10px;
 }
 .animated {

@@ -54,7 +54,7 @@ export default {
 
 <style lang="scss" scoped>
 nav {
-  background-color: rgb(218, 187, 62);
+  background-color: rgb(200, 160, 90);
 }
 
 .position-fixed {
