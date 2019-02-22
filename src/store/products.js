@@ -9,12 +9,12 @@ export default {
   actions: {
     getProducts(context, page) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
-      context.commit('LOADING', true);
+      context.commit('LOADING', true, { root: true });
       axios.get(api).then((response) => {
         window.scrollTo(0, 0);
         context.commit('PRODUCTS', response.data.products);
         context.commit('PAGINATION', response.data.pagination);
-        context.commit('LOADING', false);
+        context.commit('LOADING', false, { root: true });
       });
     },
   },
