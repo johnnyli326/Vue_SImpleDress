@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Loading :active.sync="isLoading"></Loading>
+    <!-- <Loading :active.sync="isLoading"></Loading> -->
     <div class="container mt-5">
       <h2 class="subTitle">ALL 全部商品</h2>
       <div class="row">
@@ -32,35 +32,27 @@
 </template>
 <script>
 import Pagination from '../../components/view/Pagination.vue';
+import {mapGetters, mapActions} from 'vuex';
 export default {
   name: 'ProductMenu',
   components: {Pagination},
   data() {
     return {
-      products: [],
-      isLoading: false,
-      category: '',
-      total: '',
-      pagination: {},
+      // products: [],
+      // pagination: {},
     };
   },
   methods: {
     getProducts(page = 1) {
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
-      vm.isLoading = true;
-      vm.$http.get(api).then((response) => {
-        console.log(response.data);
-        window.scrollTo(0, 0);
-        vm.products = response.data.products;
-        vm.pagination = response.data.pagination;
-        vm.isLoading = false;
-      });
+      this.$store.dispatch('productsModules', ['getProducts'], page);
     },
     getProduct(productId) {
       const vm = this;
       vm.$router.push({path: `product/${productId}`});
-    }
+    },
+  },
+  computed: {
+    ...mapGetters('productsModules', ['products', 'pagination']),
   },
   created() {
     const vm = this;

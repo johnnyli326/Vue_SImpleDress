@@ -7,7 +7,7 @@ import Loading from 'vue-loading-overlay';
 import Vuex from 'vuex';
 import App from './App.vue';
 import router from './router';
-import store from './store';
+import store from './store/index';
 import 'bootstrap';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import currencyFilter from './filters/currency';
