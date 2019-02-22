@@ -1,9 +1,8 @@
 <template>
   <div>
-    <div class="banner">
+    <div class="banner d-flex justify-content-center align-items-center">
         <h1 class="display-4 text-center">
           <router-link class="title" to="/Home">
-            <img src="../../assets/images/logo.svg" alt="logo">
             SIMPLE DRESS
           </router-link>
         </h1>
@@ -64,6 +63,7 @@ export default {
 @import "../../assets/mixin";
 .banner {
   padding-top: 100px;
+  min-height: 300px;
 }
 .nav-item {
   width: 18%;
@@ -72,7 +72,7 @@ export default {
   };
 }
 .nav-link {
-  color: rgb(199, 171, 58);
+  color: rgb(200, 160, 90);
   display: block;
   text-align: center;
   padding: 0 1%;
@@ -82,18 +82,16 @@ export default {
   }
 }
 .title{
+  height: 150px;
   text-indent: 101%;
   white-space: nowrap;
   overflow: hidden;
   display: block;
 }
 h1 {
+  width: 600px;
   background-image: url('../../assets/images/logo.svg');
   background-size: cover;
   background-position: center center;
-  &:hover {
-    transition: all 0.5s;
-    opacity: 0.5;
-  };
 }
 </style>
