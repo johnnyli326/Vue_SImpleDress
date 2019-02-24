@@ -1,6 +1,5 @@
 <template>
   <div class="mt-4">
-    <loading :active.sync="isLoading"></loading>
     <h2 class="text-center">結帳</h2>
       <div class="row my-3">
         <div class="col-md-4 text-center">
@@ -77,51 +76,34 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   data() {
     return {
       // route取得的訂單id
       orderId: '',
-      isLoading: false,
-      // 取得的訂單資訊
-      order: {
-        user: {
-          user: {}, // 因為有另一層，所以一開始讀取不到，會出錯。
-        },
-      },
     };
   },
   methods: {
   // 取得後端資料
     getOrder() {
       const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${vm.orderId}`;
-      vm.isLoading = true;
-      vm.$http.get(api).then((response) => {
-        console.log('oneOrder', response.data);
-        vm.order = response.data.order;
-        vm.isLoading = false;
-      });
+      vm.$store.dispatch('orderModules/getOrder', vm.orderId);
     },
     // 點擊付款
     payOrder() {
       const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${vm.orderId}`;
-      vm.isLoading = true;
-      vm.$http.post(api).then((response) => {
-        console.log(response.data);
-        vm.isLoading = false;
-        vm.getOrder();
-        // 付款完成，清除購物車資訊
-        vm.$bus.$emit('checkout');
-      });
+      vm.$store.dispatch('orderModules/payOrder', vm.orderId);
     },
+  },
+  computed: {
+    ...mapGetters('orderModules', ['order']),
   },
   created() {
     const vm = this;
     // 取得網址上的參數
     vm.orderId = vm.$route.params.orderId;
-    console.log(vm.orderId);
     // 取得該產品訂單
     vm.getOrder();
   },

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading :active.sync="isLoading"></loading>
     <div class="container my-5">
       <h2 class="text-center">結帳</h2>
       <div class="row my-3">
@@ -33,9 +32,9 @@
                       <th>數量</th>
                       <th class="text-center">小計</th>
                     </tr>
-                    <tr v-for="item in cart" :key="item.id">
+                    <tr v-for="item in carts" :key="item.id">
                       <td class="text-left">
-                        <a href="#" @click.prevent="productRoute(item.product_id)" class="btn btn-link">
+                        <a href="#" @click.prevent="ProductDetail(item.product_id)" class="btn btn-link">
                           <img class="small mr-3" :src="item.product.imageUrl" alt="">
                           <div>{{ item.product.title }}</div>
                         </a>
@@ -60,7 +59,7 @@
       <h3 class="text-center mt-5">訂購人資訊</h3>
       <div class="row justify-content-center">
         <div class="col-md-8 border p-4">
-          <form action=""  @submit.prevent="createOrder()">
+          <form action=""  @submit.prevent="createOrder(form)">
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="name">姓名 Name</label>
@@ -98,17 +97,11 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   data() {
     return {
-      cart: [],
-      finalTotal: '',
-      total: '',
-      status: {
-        loadingItem: '',
-      },
-      coupon_code: '',
-      isLoading: false,
       form: {
         user: {
           name: '',
@@ -121,65 +114,30 @@ export default {
     };
   },
   methods: {
-    getCart() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.isLoading = true;
-      vm.$http.get(api).then((response) => {
-        vm.cart = response.data.data.carts;
-        vm.finalTotal = response.data.data.final_total;
-        vm.total = response.data.data.total;
-        console.log('getCart', response.data);
-        vm.isLoading = false;
-      });
-    },
-    removeCart (id) {
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      vm.status.loadingItem = id;
-      vm.$http.delete(api).then((response) => {
-        console.log(response.data);
-        vm.isLoading = false;
-        vm.getCart();
-        vm.status.loadingItem = id;
-      });
-    },
+    ...mapActions('cartModules', ['getCart']),
     // 建立訂單
-    createOrder() {
+    createOrder(form) {
       const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
-      console.log('checkout', api);
-      const order = {
-        user: vm.form,
-      }
-      vm.isLoading = true;
-      // 欄位不可為空
+      // // 欄位不可為空
       vm.$validator.validate().then(result => {
         console.log(result);
         if (result) {
-          vm.$http.post(api, {data: order}).then((response) => {
-            console.log(response.data);
-            if (response.data.success) { // 跳到checkout頁面
-              vm.$router.push(`/checkout/${response.data.orderId}`);
-            }
-          })
+          vm.$store.dispatch('orderModules/createOrder', { user: form });
         } else {
           console.log('欄位不完整');
-        }
-        vm.isLoading = false;
-      })
+        };
+      });
     },
-    productRoute (id) {
-      const vm = this;
-      vm.$router.push(`/product/${id}`);
-    }
+    ProductDetail(productId) {
+      this.$store.dispatch('productsModules/getProductDetail', productId);
+    },
+  },
+  computed: {
+    ...mapGetters('cartModules', ['carts', 'finalTotal'])
   },
   created() {
     const vm = this;
     vm.getCart();
-    vm.$bus.$on('newCart', function() {
-      vm.getCart();
-    });
   },
 }
 </script>

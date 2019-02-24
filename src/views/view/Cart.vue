@@ -71,19 +71,6 @@ export default {
     },
     addCouponCode(coupon_code) {
       this.$store.dispatch('couponModules/addCouponCode', { code: this.coupon_code });
-      // const vm = this;
-      // const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
-      // const coupon = {
-      //   code: vm.coupon_code,
-      // };
-      // vm.isLoading = true;
-      // // data和coupn都是obj
-      // vm.$http.post(api, { data: coupon }).then((response) => {
-      //   console.log(response.data);
-      //   vm.isLoading = false;
-      //   vm.getCart();
-      // });
-      // vm.coupon_code = '';
     },
     ProductDetail(productId) {
       this.$store.dispatch('productsModules/getProductDetail', productId);

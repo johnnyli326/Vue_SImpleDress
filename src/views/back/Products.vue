@@ -1,7 +1,6 @@
 <template>
   <div>
     <!-- loading 元件 -->
-    <loading :active.sync="isLoading"></loading>
     <div class="content mt-5">
       <div class="create-btn-Pos">
         <button class="btn btn-primary mt-4" @click.prevent="openModal(true)">建立新的產品</button>
@@ -57,7 +56,7 @@
                 <div class="form-group">
                   <label for="image">輸入圖片網址</label>
                   <input type="text" class="form-control" id="image"
-                    placeholder="請輸入圖片連結" v-model="tempProduct.imageUrl">
+                    placeholder="請輸入圖片連結" v-model="TempProduct.imageUrl">
                 </div>
                 <div class="form-group" >
                   <label for="customFile">或 上傳圖片
@@ -69,24 +68,24 @@
                     ref="files" @change="uploadFile">
                 </div>
                 <img img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
-                    class="img-fluid" alt="" :src="tempProduct.imageUrl">
+                    class="img-fluid" alt="" :src="TempProduct.imageUrl">
               </div>
               <div class="col-sm-8">
                 <div class="form-group">
                   <label for="title">標題</label>
-                  <input type="text" class="form-control" id="title" v-model="tempProduct.title">
+                  <input type="text" class="form-control" id="title" v-model="TempProduct.title">
                 </div>
 
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="category">分類</label>
                     <input type="text" class="form-control" id="category"
-                      placeholder="請輸入分類" v-model="tempProduct.category">
+                      placeholder="請輸入分類" v-model="TempProduct.category">
                   </div>
                   <div class="form-group col-md-6">
                     <label for="price">單位</label>
                     <input type="unit" class="form-control" id="unit"
-                      placeholder="請輸入單位" v-model="tempProduct.unit">
+                      placeholder="請輸入單位" v-model="TempProduct.unit">
                   </div>
                 </div>
 
@@ -94,30 +93,30 @@
                   <div class="form-group col-md-6">
                   <label for="origin_price">原價</label>
                     <input type="number" class="form-control" id="origin_price"
-                      placeholder="請輸入原價" v-model="tempProduct['origin_price']">
+                      placeholder="請輸入原價" v-model="TempProduct['origin_price']">
                   </div>
                   <div class="form-group col-md-6">
                     <label for="price">售價</label>
                     <input type="number" class="form-control" id="price"
-                      placeholder="請輸入售價" v-model="tempProduct.price">
+                      placeholder="請輸入售價" v-model="TempProduct.price">
                   </div>
                 </div>
                 <hr>
                 <div class="form-group">
                   <label for="description">產品描述</label>
                   <textarea type="text" class="form-control" id="description"
-                    placeholder="請輸入產品描述" v-model="tempProduct.description"></textarea>
+                    placeholder="請輸入產品描述" v-model="TempProduct.description"></textarea>
                 </div>
                 <div class="form-group">
                   <label for="content">說明內容</label>
                   <textarea type="text" class="form-control" id="content"
-                    placeholder="請輸入產品說明內容" v-model="tempProduct.content"></textarea>
+                    placeholder="請輸入產品說明內容" v-model="TempProduct.content"></textarea>
                 </div>
                 <div class="form-group">
                   <div class="form-check">
                     <!-- :true/false-value -->
                     <input class="form-check-input" type="checkbox"
-                      id="is_enabled" v-model="tempProduct['is_enabled']"
+                      id="is_enabled" v-model="TempProduct['is_enabled']"
                       :true-value="1" :false-value="0">
                     <label class="form-check-label" for="is_enabled">
                       是否啟用
@@ -148,7 +147,7 @@
             </button>
           </div>
           <div class="modal-body">
-            是否刪除 <strong class="text-danger">{{ tempProduct.title }}</strong> 商品(刪除後將無法恢復)。
+            是否刪除 <strong class="text-danger">{{ TempProduct.title }}</strong> 商品(刪除後將無法恢復)。
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
@@ -163,59 +162,44 @@
 <script>
 import $ from 'jquery';
 import Pagination from '../../components/view/Pagination';
+import { mapGetters } from 'vuex';
+
 export default {
   components: {
     Pagination,
   },
   data() {
     return {
-      // 接收外部資料
-      products: [],
       // Edit product
-      tempProduct: {},
+      TempProduct: {},
       // 判斷是否是新物件
       isNew: false,
       // modal 標題更改
       modalHead: '新增',
-      // 全螢幕Loading Boolen
-      isLoading: false,
       // 上傳圖片loading
       status: {
         fileUploading: false,
       },
-      // 取得的分頁資訊
-      pagination: {},
     };
   },
   methods: {
     // 從外部server取得data
-    getProducts(page = 1) { // ES6 參數預設
-      let vm = this;
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
-      // 啟動Loading畫面
-      vm.isLoading = true;
-      vm.$http.get(api).then((response) => {
-        console.log(response.data);
-        window.scrollTo(0, 0);
-        vm.products = response.data.products;
-        // pagination
-        vm.pagination = response.data.pagination;
-        // 停止loading畫面
-        vm.isLoading = false;
-      });
+    getProducts(page = 1) {
+      this.$store.dispatch('productsModules/getProducts', page);
     },
     // 透過method取得資料後,才開啟modal。
     openModal(isNew, item) {
+      this.$store.dispatch('productsModules/openModal', { isNew, item });
       if(isNew) { // 新增
-        this.tempProduct = {};
+        this.TempProduct = {};
         this.isNew = true;
         this.modalHead = '新增';
       } else { // 編輯
         // ES6 寫法，將item元素寫入一個空的obj，避免tempProduct和item有參考。
-        this.tempProduct = Object.assign({}, item);
+        this.TempProduct = Object.assign({}, item);
         this.isNew = false;
         this.modalHead = '編輯';
-        console.log(this.tempProduct);
+        console.log(this.TempProduct);
       };
       $('#productModal').modal('show');
     },
@@ -225,12 +209,12 @@ export default {
       let vm = this;
       let httpMethod = 'post';
       if(!vm.isNew) { // 如果是編輯，api,方法 變更
-        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
+        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.TempProduct.id}`;
         httpMethod = 'put';
       }
       console.log(api);
       // {data: vm.tempProduct}統一data樣式
-      this.$http[httpMethod](api, {data: vm.tempProduct}).then((response) => {
+      this.$http[httpMethod](api, {data: vm.TempProduct}).then((response) => {
         console.log(response.data);
         if(response.data.success) { // 新增成功
           vm.getProducts();
@@ -244,9 +228,9 @@ export default {
     // 刪除商品
     deleteProduct() {
       let vm = this;
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
+      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.TempProduct.id}`;
       console.log(api);
-      this.$http.delete(api, {data: vm.tempProduct.id}).then((response) => {
+      this.$http.delete(api, {data: vm.TempProduct.id}).then((response) => {
         console.log(response.data);
         if(response.data.success) {
           $('#deleteModal').modal('hide');
@@ -258,9 +242,9 @@ export default {
       });
     },
     openDelModal(item) {
-      this.tempProduct = Object.assign({}, item);
+      this.TempProduct = Object.assign({}, item);
       $('#deleteModal').modal('show');
-      console.log(this.tempProduct);
+      console.log(this.TempProduct);
     },
     // 上傳圖片
     uploadFile() {
@@ -291,6 +275,9 @@ export default {
         setTimeout(function() { vm.status.fileUploading = false }, 3000);
       })
     }
+  },
+  computed: {
+    ...mapGetters('productsModules', ['products', 'pagination'])
   },
   created() {
     this.getProducts();

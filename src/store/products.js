@@ -12,6 +12,9 @@ export default {
     MenProduct: [],
     KidProduct: [],
     product: [],
+    tempProduct: '',
+    isNew: true,
+    modalHead: '',
   },
   actions: {
     getProducts(context, page) {

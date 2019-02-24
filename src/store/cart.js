@@ -12,7 +12,6 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       return new Promise(() => {
         axios.get(api).then((response) => {
-          console.log(response.data.data);
           if (response.data.data) {
             context.commit('CART', response.data.data.carts);
             context.commit('FINALTOTAL', response.data.data.final_total);
