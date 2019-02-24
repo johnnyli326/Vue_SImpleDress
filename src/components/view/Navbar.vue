@@ -10,7 +10,7 @@
             <router-link class="nav-link pr-3" to="/login"><i class="fas fa-cog mr-2"></i>後台管理</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link pr-3" to="/cart"><i class="fas fa-cart-plus mr-2"></i>購物車 ( {{ cart.length }} )</router-link>
+            <router-link class="nav-link pr-3" to="/cart"><i class="fas fa-cart-plus mr-2"></i>購物車 ( {{ carts.length }} )</router-link>
           </li>
         </ul>
       </div>
@@ -19,35 +19,22 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'Navbar',
   data() {
-    return {
-      cart: [],
-    };
+    return {};
   },
   methods: {
-    getCart() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.isLoading = true;
-      vm.$http.get(api).then((response) => {
-        vm.cart = response.data.data.carts;
-      });
-    },
+    ...mapActions('cartModules', ['getCart']),
+  },
+  computed: {
+    ...mapGetters('cartModules', ['carts']),
   },
   created() {
     const vm = this;
     vm.getCart(); // 剛建立時讀取
-    vm.$bus.$on('newCart', function() { // 當按下加到購物車，接收newCart資訊
-      vm.getCart();
-    });
-    vm.$bus.$on('delete:cart', function() { // 接收刪除購物車資訊
-      vm.getCart();
-    });
-    vm.$bus.$on('checkout', function() { // 接收付款完成資訊
-      vm.getCart();
-    });
   },
 }
 </script>

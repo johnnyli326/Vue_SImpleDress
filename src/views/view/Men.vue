@@ -1,24 +1,47 @@
 <template>
   <div>
-    <Loading :active.sync="isLoading"></Loading>
     <h2 class="subTitle">MEN 男裝</h2>
     <div class="row mt-5">
-      <div class="col-md-3 my-3 d-flex justify-content-center" v-for="item in products" :key="item.id">
+      <div class="col-md-3 my-3 d-flex justify-content-center"
+      v-for="item in MenProduct" :key="item.id">
         <div class="card border-0" style="width: 222px;">
-          <img :src="item.imageUrl" class="card-img-top" alt="..." style="height: 309.3px" @click="getProduct(item.id)">
+          <img :src="item.imageUrl" class="card-img-top" alt="..." style="height: 309.3px"
+          @click="ProductDetail(item.id)">
           <div class="card-body text-center">
             <p class="mb-0">{{ item.title }}</p>
             <div>
-              <span class="text-center priceText" v-if="item.origin_price == item.price">NT.{{ item.origin_price }}</span>
-              <span class="mr-2 priceText" v-if="item.origin_price !== item.price" style="text-decoration:line-through">NT.{{ item.origin_price }}</span>
-              <span v-if="item.origin_price !== item.price" class="text-danger priceText">NT.{{ item.price }}</span>
+              <span class="text-center priceText" v-if="item.origin_price == item.price">
+                NT.{{ item.origin_price }}
+              </span>
+              <span class="mr-2 priceText" v-if="item.origin_price !== item.price"
+              style="text-decoration:line-through">NT.{{ item.origin_price }}
+              </span>
+              <span v-if="item.origin_price !== item.price" class="text-danger priceText">
+                NT.{{ item.price }}
+              </span>
             </div>
             <div class="color">
               <ul class="nav justify-content-center mt-1">
-                <li class="nav-item mr-2"><div style="width:12px; height:12px; border-radius: 50%; background-color: black; border: 1px solid black;"></div></li>
-                <li class="nav-item mr-2"><div style="width:12px; height:12px; border-radius: 50%; background-color: gray; border: 1px solid black;"></div></li>
-                <li class="nav-item mr-2"><div style="width:12px; height:12px; border-radius: 50%; background-color: pink; border: 1px solid black;"></div></li>
-                <li class="nav-item mr-2"><div style="width:12px; height:12px; border-radius: 50%; background-color: blue; border: 1px solid black;"></div></li>
+                <li class="nav-item mr-2">
+                  <div style="width:12px; height:12px;border-radius: 50%;
+                  background-color: black; border: 1px solid black;">
+                  </div>
+                </li>
+                <li class="nav-item mr-2">
+                  <div style="width:12px; height:12px; border-radius: 50%;
+                  background-color: gray; border: 1px solid black;">
+                  </div>
+                </li>
+                <li class="nav-item mr-2">
+                  <div style="width:12px; height:12px; border-radius: 50%;
+                  background-color: pink; border: 1px solid black;">
+                  </div>
+                </li>
+                <li class="nav-item mr-2">
+                  <div style="width:12px; height:12px; border-radius: 50%;
+                  background-color: blue; border: 1px solid black;">
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -28,37 +51,27 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'Men',
   data() {
-    return {
-      products: [],
-      isLoading: false,
-    };
+    return {};
   },
   methods: {
-    getProducts(page = 1) {
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      vm.isLoading = true;
-      vm.$http.get(api).then((response) => {
-        console.log(response.data);
-        response.data.products.forEach((item) => {
-          if(item.category.includes('Men')) vm.products.push(item);
-        });
-        vm.isLoading = false;
-      });
+    ProductDetail(productId) {
+      this.$store.dispatch('productsModules/getProductDetail', productId);
     },
-    getProduct(productId) {
-      const vm = this;
-      vm.$router.push({path: `/product/${productId}`});
-    },
+    ...mapActions('productsModules', ['getMenProduct']),
+  },
+  computed: {
+    ...mapGetters('productsModules', ['MenProduct']),
   },
   created() {
     const vm = this;
-    vm.getProducts();
-  }
-}
+    vm.getMenProduct();
+  },
+};
 </script>
 <style lang="scss" scoped>
 .nav-item:hover {

@@ -6,7 +6,7 @@
       :key="item.id" onchange="location.reload()">
         <div class="card border-0" style="width: 222px;">
           <img :src="item.imageUrl" class="card-img-top" alt="..."
-          style="height: 309.3px" @click="getProduct(item.id)">
+          style="height: 309.3px" @click="ProductDetail(item.id)">
           <div class="card-body text-center">
             <p class="mb-0">{{ item.title }}</p>
             <div>
@@ -67,9 +67,8 @@ export default {
     getProducts(page = 1) {
       this.$store.dispatch('productsModules/getProducts', page);
     },
-    getProduct(productId) {
-      const vm = this;
-      vm.$router.push({ path: `product/${productId}` });
+    ProductDetail(productId) {
+      this.$store.dispatch('productsModules/getProductDetail', productId);
     },
   },
   computed: {

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Loading :active.sync="isLoading"></Loading>
     <div class="container my-4">
       <h2 class="text-center my-3">購物車列表</h2>
       <div class="table-responsive">
@@ -12,15 +11,15 @@
               <th>數量</th>
               <th class="text-center">小計</th>
             </tr>
-            <tr v-for="item in cart" :key="item.id">
+            <tr v-for="item in carts" :key="item.id">
               <td class="align-middle text-center" width="20%">
                 <button class="btn" @click="removeCart(item.id)">
-                  <i class="fas fa-spinner fa-spin" v-if="status.loadingItem === item.id"></i>
+                  <i class="fas fa-spinner fa-spin" v-if="loadingItem === item.id"></i>
                   <i class="far fa-trash-alt text-secondary"></i>
                 </button>
               </td>
               <td class="text-left">
-                <a href="#" class="btn btn-link" @click.prevent="productRoute(item.product_id)">
+                <a href="#" class="btn btn-link" @click.prevent="ProductDetail(item.product_id)">
                   <img class="small mr-3" :src="item.product.imageUrl" alt="">
                   <div>{{ item.product.title }}</div>
                 </a>
@@ -44,7 +43,7 @@
           <div class="input-group mb-2">
             <input type="text" class="form-control" v-model="coupon_code">
             <div class="input-group-append">
-              <button class="btn btn-outline-dark" @click="addCouponCode()">套用優惠卷</button>
+              <button class="btn btn-outline-dark" @click="addCouponCode(coupon_code)">套用優惠卷</button>
             </div>
           </div>
         </div>
@@ -57,66 +56,45 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   data() {
     return {
-      cart: [],
-      finalTotal: '',
-      total: '',
-      status: {
-        loadingItem: '',
-      },
       coupon_code: '',
-      isLoading: false,
     };
   },
   methods: {
-    getCart() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.isLoading = true;
-      vm.$http.get(api).then((response) => {
-        vm.cart = response.data.data.carts;
-        vm.finalTotal = response.data.data.final_total;
-        vm.total = response.data.data.total;
-        console.log('getCart', response.data);
-        vm.isLoading = false;
-      });
-    },
+    ...mapActions('cartModules', ['getCart']),
     removeCart(id) {
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      vm.status.loadingItem = id;
-      vm.$http.delete(api).then((response) => {
-        console.log(response.data);
-        vm.isLoading = false;
-        vm.getCart();
-        vm.$bus.$emit('delete:cart');
-        vm.status.loadingItem = id;
-      });
+      this.$store.dispatch('cartModules/removeCart', id);
     },
-    addCouponCode() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
-      const coupon = {
-        code: vm.coupon_code,
-      }
-      vm.isLoading = true;
-      // data和coupn都是obj
-      vm.$http.post(api, { data: coupon }).then((response) => {
-        console.log(response.data);
-        vm.isLoading = false;
-        vm.getCart();
-      });
-      vm.coupon_code = '';
+    addCouponCode(coupon_code) {
+      this.$store.dispatch('couponModules/addCouponCode', { code: this.coupon_code });
+      // const vm = this;
+      // const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
+      // const coupon = {
+      //   code: vm.coupon_code,
+      // };
+      // vm.isLoading = true;
+      // // data和coupn都是obj
+      // vm.$http.post(api, { data: coupon }).then((response) => {
+      //   console.log(response.data);
+      //   vm.isLoading = false;
+      //   vm.getCart();
+      // });
+      // vm.coupon_code = '';
     },
-    productRoute(id) { // 移動至產品頁面
-      const vm = this;
-      vm.$router.push(`/product/${id}`);
-    }
+    ProductDetail(productId) {
+      this.$store.dispatch('productsModules/getProductDetail', productId);
+    },
+  },
+  computed: {
+    ...mapGetters('cartModules', ['carts', 'finalTotal']),
+    ...mapGetters(['loadingItem']),
   },
   watch: {
-    cart: function(val) {
+    carts: function(val) {
       if(val.length === 0) {
         alert('目前購物車沒有任何商品!');
         this.$router.push('Home');
@@ -126,9 +104,6 @@ export default {
   created() {
     const vm = this;
     vm.getCart();
-    vm.$bus.$on('newCart', function() {
-      vm.getCart();
-    });
   }
 }
 </script>
