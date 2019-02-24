@@ -6,10 +6,16 @@
           <div class="alert alert-white rounded-pill">Step 1:請填寫基本資料</div>
         </div>
         <div class="col-md-4 text-center">
-          <div class="alert alert-white rounded-pill" :class="{'alert-success':order.is_paid === false}">Step 2:金流付款</div>
+          <div class="alert alert-white rounded-pill"
+          :class="{'alert-success':order.is_paid === false}">
+            Step 2:金流付款
+          </div>
         </div>
         <div class="col-md-4 text-center">
-          <div class="alert alert-white rounded-pill" :class="{'alert-success':order.is_paid === true}">Step 3:完成</div>
+          <div class="alert alert-white rounded-pill"
+          :class="{'alert-success':order.is_paid === true}">
+            Step 3:完成
+          </div>
         </div>
       </div>
     <div class="my-5 row justify-content-center">
@@ -25,14 +31,23 @@
             </thead>
             <tbody>
               <tr v-for="item in order.products" :key="item.id">
-                <td class="align-middle"><a href="#" class="btn btn-link text-info"><img class="small" :src="item.product.imageUrl" alt=""><div>{{ item.product.title }}</div></a></td>
+                <td class="align-middle">
+                  <a href="#" class="btn btn-link text-info">
+                    <img class="small" :src="item.product.imageUrl" alt="">
+                    <div>{{ item.product.title }}</div>
+                  </a>
+                </td>
                 <td class="align-middle">{{ item.qty }}/{{ item.product.unit }}</td>
-                <td class="align-middle text-right">{{ Math.round(item.final_total) | currency }}</td>
+                <td class="align-middle text-right">
+                  {{ Math.round(item.final_total) | currency }}
+                </td>
               </tr>
             </tbody>
             <tfoot>
               <tr>
-                <td class="text-right" colspan="3">總計： <span>{{ Math.round(order.total) | currency }}</span></td>
+                <td class="text-right" colspan="3">
+                  總計： <span>{{ Math.round(order.total) | currency }}</span>
+                </td>
               </tr>
             </tfoot>
           </table>
@@ -76,7 +91,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
@@ -107,7 +122,7 @@ export default {
     // 取得該產品訂單
     vm.getOrder();
   },
-}
+};
 </script>
 
 <style scoped>

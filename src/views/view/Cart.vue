@@ -43,13 +43,17 @@
           <div class="input-group mb-2">
             <input type="text" class="form-control" v-model="coupon_code">
             <div class="input-group-append">
-              <button class="btn btn-outline-dark" @click="addCouponCode(coupon_code)">套用優惠卷</button>
+              <button class="btn btn-outline-dark" @click="addCouponCode(coupon_code)">
+                套用優惠卷
+              </button>
             </div>
           </div>
         </div>
       </div>
       <div class="d-flex justify-content-center">
-        <router-link to="order" class="btn btn-block btn-primary my-4 btn-checkout w-100">前往結帳</router-link>
+        <router-link to="order" class="btn btn-block btn-primary my-4 btn-checkout w-100">
+          前往結帳
+        </router-link>
       </div>
     </div>
   </div>
@@ -69,7 +73,7 @@ export default {
     removeCart(id) {
       this.$store.dispatch('cartModules/removeCart', id);
     },
-    addCouponCode(coupon_code) {
+    addCouponCode() {
       this.$store.dispatch('couponModules/addCouponCode', { code: this.coupon_code });
     },
     ProductDetail(productId) {
@@ -81,18 +85,18 @@ export default {
     ...mapGetters(['loadingItem']),
   },
   watch: {
-    carts: function(val) {
-      if(val.length === 0) {
+    carts: (val) => {
+      if (val.length === 0) {
         alert('目前購物車沒有任何商品!');
         this.$router.push('Home');
-      };
+      }
     },
   },
   created() {
     const vm = this;
     vm.getCart();
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">

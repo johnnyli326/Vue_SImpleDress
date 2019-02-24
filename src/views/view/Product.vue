@@ -68,8 +68,7 @@ export default {
       this.$store.dispatch('productsModules/getProduct', id);
     },
     addtoCart(id, qty = 1) {
-      this.$store.dispatch('cartModules/addtoCart', { id, qty })
-      .then( () => console.log('dssd'))
+      this.$store.dispatch('cartModules/addtoCart', { id, qty });
     },
   },
   computed: {
@@ -83,11 +82,11 @@ export default {
   mounted() { // 選取商品顏色、尺寸
     $(document).ready(() => {
       // 商品顏色
-      $('.product-color').click( (e) => {
+      $('.product-color').click((e) => {
         $(e.target).addClass('active').siblings().removeClass('active');
       });
       // 商品尺寸
-      $('.product-size').click( (e) => {
+      $('.product-size').click((e) => {
         $(e.target).addClass('active').siblings().removeClass('active');
       });
     });

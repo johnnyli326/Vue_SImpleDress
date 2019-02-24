@@ -17,12 +17,18 @@
         <div class="card">
           <div class="card-header" id="headingOne">
             <h3 class="mb-0">
-              <button class="btn btn-link text-center" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <button class="btn btn-link text-center"
+              type="button" data-toggle="collapse"
+              data-target="#collapseOne"
+              aria-expanded="true"
+              aria-controls="collapseOne">
                 顯示購物車細節
               </button>
             </h3>
           </div>
-          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div id="collapseOne" class="collapse"
+          aria-labelledby="headingOne"
+          data-parent="#accordionExample">
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-sm table-striped">
@@ -34,7 +40,8 @@
                     </tr>
                     <tr v-for="item in carts" :key="item.id">
                       <td class="text-left">
-                        <a href="#" @click.prevent="ProductDetail(item.product_id)" class="btn btn-link">
+                        <a href="#" @click.prevent="ProductDetail(item.product_id)"
+                        class="btn btn-link">
                           <img class="small mr-3" :src="item.product.imageUrl" alt="">
                           <div>{{ item.product.title }}</div>
                         </a>
@@ -63,30 +70,46 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="name">姓名 Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="請輸入真實姓名" v-model="form.user.name"
+                <input type="text" class="form-control" id="name"
+                name="name" placeholder="請輸入真實姓名"
+                v-model="form.user.name"
                 v-validate="'required'" :class="{'is-invalid':errors.has('name')}">
                 <div class="text-danger" v-if="errors.has('name')">姓名欄不得留空</div>
               </div>
               <div class="form-group col-md-6">
                 <label for="tel">電話</label>
-                <input type="text" class="form-control" name="tel" id="tel" placeholder="請輸入聯絡電話" v-model="form.user.tel"
+                <input type="text" class="form-control"
+                name="tel" id="tel"
+                placeholder="請輸入聯絡電話"
+                v-model="form.user.tel"
                 v-validate="'required'" :class="{'is-invalid':errors.has('tel')}">
                 <div class="text-danger" v-if="errors.has('tel')">電話欄不得留空</div>
               </div>
               <div class="form-group col-md-12">
                 <label for="email">E-mail</label>
-                <input type="text" class="form-control" id="email" name="email" placeholder="請輸入電子信箱" v-model="form.user.email" v-validate="'required|email'"
+                <input type="text" class="form-control"
+                id="email"
+                name="email"
+                placeholder="請輸入電子信箱"
+                v-model="form.user.email"
+                v-validate="'required|email'"
                 :class="{'is-invalid':errors.first('email')}">
-                <div class="text-danger" v-if="errors.first('email')">{{ errors.first('email') }}</div>
+                <div class="text-danger" v-if="errors.first('email')">
+                  {{ errors.first('email') }}
+                </div>
               </div>
               <div class="form-group col-md-12">
                 <label for="address">地址 Address</label>
-                <input type="text" class="form-control" id="address" name="address" placeholder="請輸入地址" v-model="form.user.address" v-validate="'required'">
+                <input type="text" class="form-control"
+                id="address" name="address" placeholder="請輸入地址"
+                v-model="form.user.address" v-validate="'required'">
                 <div class="text-danger" v-if="errors.has('address')">地址欄不得留空</div>
               </div>
             </div>
             <div class="text-right">
-              <router-link class="btn btn-secondary" to="/productmenu">繼續選購</router-link>
+              <router-link class="btn btn-secondary" to="/productmenu">
+                繼續選購
+              </router-link>
               <button class="btn btn-primary">確認送出</button>
             </div>
           </form>
@@ -119,13 +142,10 @@ export default {
     createOrder(form) {
       const vm = this;
       // // 欄位不可為空
-      vm.$validator.validate().then(result => {
-        console.log(result);
+      vm.$validator.validate().then((result) => {
         if (result) {
           vm.$store.dispatch('orderModules/createOrder', { user: form });
-        } else {
-          console.log('欄位不完整');
-        };
+        }
       });
     },
     ProductDetail(productId) {
@@ -133,13 +153,13 @@ export default {
     },
   },
   computed: {
-    ...mapGetters('cartModules', ['carts', 'finalTotal'])
+    ...mapGetters('cartModules', ['carts', 'finalTotal']),
   },
   created() {
     const vm = this;
     vm.getCart();
   },
-}
+};
 </script>
 
 <style scoped>

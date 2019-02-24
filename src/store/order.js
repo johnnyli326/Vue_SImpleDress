@@ -17,7 +17,6 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
       context.commit('LOADING', true, { root: true });
       axios.post(api, { data: form }).then((response) => {
-        console.log(response.data);
         if (response.data.success) { // 跳到checkout頁面
           router.push(`/checkout/${response.data.orderId}`);
         }
@@ -28,7 +27,6 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${orderId}`;
       context.commit('LOADING', true, { root: true });
       axios.get(api).then((response) => {
-        console.log('oneOrder', response.data);
         context.commit('GETORDER', response.data.order);
         context.commit('LOADING', false, { root: true });
       });
@@ -37,9 +35,10 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${orderId}`;
       context.commit('LOADING', true, { root: true });
       axios.post(api).then((response) => {
-        console.log(response.data);
-        context.dispatch('getOrder', orderId);
-        context.commit('LOADING', false, { root: true });
+        if (response.data.success) {
+          context.dispatch('getOrder', orderId);
+          context.commit('LOADING', false, { root: true });
+        }
       });
     },
   },
