@@ -97,7 +97,7 @@ export default {
         })
       })
       $('.carousel').carousel({
-        interval: 3000,
+        interval: 4000,
       })
       $('.scrollup').click(function (e) {
         e.preventDefault();
