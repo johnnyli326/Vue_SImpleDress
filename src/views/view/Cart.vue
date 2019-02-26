@@ -7,7 +7,7 @@
           <tbody>
             <tr class="bg-secondary text-white">
               <th class="text-center" width="10%">刪除</th>
-              <th  class="text-left name-media">商品名稱</th>
+              <th  class="text-left">商品名稱</th>
               <th>數量</th>
               <th class="text-center">小計</th>
             </tr>
@@ -19,8 +19,8 @@
                 </button>
               </td>
               <td class="text-left">
-                <a href="#" class="btn btn-link" @click.prevent="ProductDetail(item.product_id)">
-                  <img class="small mr-3" :src="item.product.imageUrl" alt="">
+                <a href="#" class="btn btn-link p-0" @click.prevent="ProductDetail(item.product_id)">
+                  <img class="small" :src="item.product.imageUrl" alt="">
                   <div>{{ item.product.title }}</div>
                 </a>
                 <div class="text-success" v-if="item.coupon">
@@ -28,11 +28,20 @@
                 </div>
               </td>
               <td class="pt-2">{{ item.qty }} / {{ item.product.unit }}</td>
-              <td class="pt-2 text-right text-danger">{{ item.final_total | currency }}</td>
+              <td>
+                <div class="pt-2 text-right text-danger" :class="{'coupon': item.coupon}">
+                  {{ item.total | currency }}
+                </div>
+                <div class="pt-2 text-right text-success" v-if="item.coupon">
+                  {{ item.final_total | currency }}
+                </div>
+              </td>            
             </tr>
             <tr>
               <td colspan="3" class="text-right">合計</td>
-              <td class="text-right text-danger">{{ finalTotal | currency }}</td>
+              <td class="text-right">
+                {{ finalTotal | currency }}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -61,6 +70,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import router from '../../router';
 
 export default {
   data() {
@@ -81,16 +91,21 @@ export default {
     },
   },
   computed: {
-    ...mapGetters('cartModules', ['carts', 'finalTotal']),
+    ...mapGetters('cartModules', ['carts', 'finalTotal', 'originalTotal']),
     ...mapGetters(['loadingItem']),
   },
   watch: {
     carts: (val) => {
       if (val.length === 0) {
         alert('目前購物車沒有任何商品!');
-        this.$router.push('Home');
+        router.push('Home');
       }
     },
+    coupon: (val) => {
+      if (ifCoupon) {
+        
+      }
+    }
   },
   created() {
     const vm = this;
@@ -108,5 +123,8 @@ export default {
   }
   input::-webkit-input-placeholder {
     color: rgba(48, 43, 47, 0.500) !important;
+  }
+  .coupon {
+    text-decoration: line-through double gray;
   }
 </style>

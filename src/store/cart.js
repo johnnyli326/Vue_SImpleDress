@@ -6,15 +6,20 @@ export default {
   state: {
     cart: [],
     finalTotal: '',
+    originalTotal: '',
   },
   actions: {
     getCart(context) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      context.commit('LOADING', true, { root: true });
       return new Promise(() => {
         axios.get(api).then((response) => {
+          console.log(response.data);
           if (response.data.data) {
             context.commit('CART', response.data.data.carts);
             context.commit('FINALTOTAL', response.data.data.final_total);
+            context.commit('ORIGINALTOTAL', response.data.data.total);
+            context.commit('LOADING', false, { root: true });
           }
         });
       });
@@ -60,6 +65,9 @@ export default {
     FINALTOTAL(state, payload) {
       state.finalTotal = payload;
     },
+    ORIGINALTOTAL(state, payload) {
+      state.originalTotal = payload;
+    },
   },
   getters: {
     carts(state) {
@@ -67,6 +75,9 @@ export default {
     },
     finalTotal(state) {
       return state.finalTotal;
+    },
+    originalTotal(state) {
+      return state.originalTotal;
     },
   },
 };
