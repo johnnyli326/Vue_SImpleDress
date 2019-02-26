@@ -1,29 +1,12 @@
 # vue-cli3_simpledress
 
-## Project setup
-```
-npm install
-```
+## DEMO
+[Simple Dress](https://johnnyli326.github.io/Vue_SImpleDress/dist/#/Home)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Development tool
+Vitual Studio Code
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Language
+1. HTML5
+2. css3
+3. Javsscript (Vue.js)
