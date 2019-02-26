@@ -41,7 +41,7 @@
       <div class="row justify-content-center">
         <div class="col-md-6">
           <div class="input-group mb-2">
-            <input type="text" class="form-control" v-model="coupon_code">
+            <input type="text" class="form-control" placeholder="輸入'coupon'，即可享有50%優惠唷！"  v-model="coupon_code">
             <div class="input-group-append">
               <button class="btn btn-outline-dark" @click="addCouponCode(coupon_code)">
                 套用優惠卷
@@ -105,5 +105,8 @@ export default {
   }
   .btn-checkout {
     width: 30%;
+  }
+  input::-webkit-input-placeholder {
+    color: rgba(48, 43, 47, 0.500) !important;
   }
 </style>

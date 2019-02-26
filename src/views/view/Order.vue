@@ -106,7 +106,7 @@
                 <div class="text-danger" v-if="errors.has('address')">地址欄不得留空</div>
               </div>
             </div>
-            <div class="text-right">
+            <div class="text-right mr-2">
               <router-link class="btn btn-secondary" to="/productmenu">
                 繼續選購
               </router-link>

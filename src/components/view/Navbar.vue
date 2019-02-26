@@ -1,6 +1,6 @@
 <template>
   <div class="position-fixed w-100">
-    <nav class="navbar navbar-expand-lg p-0 navbar-default" role="navigation">
+    <nav class="navbar navbar-expand-lg p-0 navbar-default m-0" role="navigation">
       <button class="navbar-toggler ml-auto mr-4" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fas fa-bars text-white"></i>
       </button>
