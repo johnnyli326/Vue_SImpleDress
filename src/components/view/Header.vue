@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="banner d-flex justify-content-center align-items-center">
-        <h1 class="display-4 text-center">
+        <h1 class="display-5 text-center">
           <router-link class="title" to="/Home">
             SIMPLE DRESS
           </router-link>
@@ -89,7 +89,7 @@ export default {
   display: block;
 }
 h1 {
-  width: 600px;
+  // width: 600px;
   background-image: url('../../assets/images/logo.svg');
   background-size: cover;
   background-position: center center;

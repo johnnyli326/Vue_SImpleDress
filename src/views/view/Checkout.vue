@@ -38,7 +38,7 @@
                   </a>
                 </td>
                 <td class="align-middle">{{ item.qty }}/{{ item.product.unit }}</td>
-                <td class="align-middle text-right">
+                <td class="align-middle text-right" :class="{'text-success':item.final_total !== item.total}">
                   {{ Math.round(item.final_total) | currency }}
                 </td>
               </tr>

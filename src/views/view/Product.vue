@@ -2,7 +2,7 @@
   <div class="container my-5">
     <div class="row">
       <div class="col-md mb-3">
-        <img :src="Product.imageUrl" class="Product-img" alt="">
+        <img :src="Product.imageUrl" class="product-img" alt="">
       </div>
       <div class="col-md">
         <h2>{{ Product.title }}</h2>

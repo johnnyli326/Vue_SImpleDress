@@ -60,7 +60,7 @@
         </div>
       </div>
       <div class="d-flex justify-content-center">
-        <router-link to="order" class="btn btn-block btn-primary my-4 btn-checkout w-100">
+        <router-link to="order" class="btn btn-block btn-primary my-4 btn-checkout">
           前往結帳
         </router-link>
       </div>
@@ -119,7 +119,7 @@ export default {
     width: 50px;
   }
   .btn-checkout {
-    width: 30%;
+    width: 150px;
   }
   input::-webkit-input-placeholder {
     color: rgba(48, 43, 47, 0.500) !important;

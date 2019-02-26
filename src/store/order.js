@@ -38,6 +38,7 @@ export default {
         if (response.data.success) {
           context.dispatch('getOrder', orderId);
           context.commit('LOADING', false, { root: true });
+          context.dispatch('alertModules/updateMessage', { message: response.data.message, status: 'success' }, { root: true });
         }
       });
     },
