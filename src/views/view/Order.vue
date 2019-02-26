@@ -107,7 +107,7 @@
               </div>
             </div>
             <div class="text-right mr-2">
-              <router-link class="btn btn-secondary" to="/productmenu">
+              <router-link class="btn btn-secondary mr-3" to="/productmenu">
                 繼續選購
               </router-link>
               <button class="btn btn-primary">確認送出</button>
