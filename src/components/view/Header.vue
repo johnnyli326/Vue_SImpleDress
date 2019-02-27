@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="banner d-flex justify-content-center align-items-center">
-        <h1 class="display-3 text-center">
+        <h1 class="display-5 text-center">
           <router-link class="title" to="/Home">
             SIMPLE DRESS
           </router-link>
