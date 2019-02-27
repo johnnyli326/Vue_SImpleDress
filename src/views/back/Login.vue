@@ -3,7 +3,7 @@
     <Alert></Alert>
     <div class="row mr-0 ml-0 min-vh-100 align-items-center">
       <div class="col-md-6 text-center">
-        <router-link to="/Home"><img src="../../assets/images/logo.svg" class="img-fluid" alt="logo"></router-link>
+        <router-link to="/Home"><img src="../../assets/images/logo.png" class="img-fluid" alt="logo"></router-link>
       </div>
       <div class="col-md-6">
         <form class="form-signin" @submit.prevent="signin">

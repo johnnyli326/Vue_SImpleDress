@@ -89,8 +89,8 @@ export default {
   display: block;
 }
 h1 {
-  // width: 600px;
-  background-image: url('../../assets/images/logo.svg');
+  height: 200px;
+  background-image: url('../../assets/images/logo.png');
   background-size: cover;
   background-position: center center;
 }

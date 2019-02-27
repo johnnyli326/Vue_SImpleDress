@@ -3,7 +3,7 @@
     <loading :active.sync="isLoading"></loading>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <router-link class="navbar-brand" to="/admin/products">
-        <img src="../../assets/images/logo.svg" class="logo" alt="logo">
+        <img src="../../assets/images/logo.png" class="logo" alt="logo">
         Simple Dress
       </router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

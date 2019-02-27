@@ -39,7 +39,7 @@
     <section class="brandStory my-4 bg-light" id="brandStory">
       <div class="row">
         <div class="col-md-6">
-          <img class="img-fluid animated" src="../../assets/images/logo.svg" alt="">
+          <img class="img-fluid animated" src="../../assets/images/logo.png" alt="">
         </div>
         <div class="col-md-6 animated">
           <h3 class="text-center my-3">品牌故事 About SimpleDress</h3>
