@@ -42,7 +42,7 @@
           <img class="img-fluid animated" src="../../assets/images/logo.png" alt="">
         </div>
         <div class="col-md-6 animated">
-          <h3 class="text-center my-3">品牌故事 About SimpleDress</h3>
+          <h3 class="text-center my-3">品牌故事<br>About SimpleDress</h3>
           <p>Simple Dress創立於1996年，隨著世界的脈動一起呼吸。</p>
           <p>如何滿足我們的客戶，是SIMPLE不段努力學習的目標。好的品質、合理的價格、貼心的服務，一直是SIMPLE的基本精神。近年來，奢侈品牌的平民化，使得一般人可以享受如貴族般的生活品味，以及所帶來的歡愉和滿足；時下年輕人更喜歡把平價商品及奢華商品混搭出不同的風格，許多有趣且富創意的街頭流行文化因此產生，這些創意更時常成為奢華品牌的設計靈感來源。</p>
         </div>
