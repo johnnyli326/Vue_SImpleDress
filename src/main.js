@@ -12,8 +12,7 @@ import 'bootstrap';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import currencyFilter from './filters/currency';
 import timestampFormat from './filters/timestampFormat';
-import './bus';
-
+// import './bus';
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.component('Loading', Loading);
@@ -27,15 +26,18 @@ new Vue({
   router,
   store,
   render: h => h(App),
+  mounted() {
+    document.dispatchEvent(new Event('render-event'));
+  },
 }).$mount('#app');
 // Navigation Guards
 router.beforeEach((to, from, next) => {
   // console.log('to', to, 'from', from, 'next', next);
   if (to.meta.requiresAuth) { // 要到達的頁面(to)，如果有requiresAuth，會被Guards擋住
-    console.log('這裡需要驗證');
+    // console.log('這裡需要驗證');
     const api = `${process.env.VUE_APP_APIPATH}/api/user/check`;
     axios.post(api).then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data.success) {
         next();
       } else {

@@ -17,7 +17,7 @@ import Footer from './Footer';
 import Alert from '../back/AlertMessage';
 export default {
   name: 'Dashboard',
-  components: {Navbar, Header, Footer, Alert},
+  components: { Navbar, Header, Footer, Alert },
 };
 </script>
 

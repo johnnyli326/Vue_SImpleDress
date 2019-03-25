@@ -51,6 +51,7 @@
     <a class="scrollup" href="#">
       <i class="fas fa-arrow-circle-up fa-3x"></i>
     </a>
+    <button class="btn btn-outline-primary">123</button>
   </div>
 </template>
 <script>
